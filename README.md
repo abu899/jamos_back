@@ -1,1 +1,1 @@
-# jamos_back
+# Jam OS Backend Toy Project
