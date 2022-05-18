@@ -3,4 +3,11 @@ spring:
     url: jdbc:mysql://b7a423b6714389:5f17c30b@us-cdbr-east-05.cleardb.net/heroku_6543982860da591?reconnect=true
     username: b7a423b6714389
     password: 5f17c30b
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format-sql: true
