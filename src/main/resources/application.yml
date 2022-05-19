@@ -11,3 +11,8 @@ spring:
     properties:
       hibernate:
         format-sql: true
+
+server:
+  servlet:
+    session:
+      tracking-modes: COOKIE

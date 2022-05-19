@@ -17,11 +17,8 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @NotEmpty
-    @Email
     private String loginId;
 
-    @NotEmpty
     private String password;
 
     public User(String loginId, String password) {

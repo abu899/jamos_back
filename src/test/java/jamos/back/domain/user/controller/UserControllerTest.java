@@ -1,8 +1,7 @@
 package jamos.back.domain.user.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jamos.back.domain.user.controller.dto.RequestUser;
+import jamos.back.domain.user.controller.form.UserRequestForm;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,7 +23,7 @@ class UserControllerTest {
     @Test
     void saveUser() throws Exception {
         String body = mapper.writeValueAsString(
-                RequestUser.builder()
+                UserRequestForm.builder()
                         .loginId("brett@naver.com")
                         .password("123")
                         .build()
