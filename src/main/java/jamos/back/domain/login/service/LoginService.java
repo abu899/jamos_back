@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public User login(String loginId, String password) {
         return userRepository.findByLoginId(loginId)

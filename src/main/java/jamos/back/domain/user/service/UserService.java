@@ -18,15 +18,11 @@ public class UserService {
 
     @Transactional
     public Long join(User user) {
-        if(!isNewLoginId(user.getLoginId())) {
+        if(!userRepository.existsByLoginId(user.getLoginId())) {
             throw new SameLoginIdException("Same login id");
         }
         userRepository.save(user);
         return user.getId();
-    }
-
-    private boolean isNewLoginId(String loginId) {
-        return userRepository.findByLoginId(loginId).isEmpty();
     }
 
     public User findUserById(Long id) {
