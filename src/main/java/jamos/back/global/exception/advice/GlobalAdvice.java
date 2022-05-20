@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalAdvice {
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(SameLoginIdException.class)
     public ErrorResult sameLoginId(SameLoginIdException e){
         return new ErrorResult("SAME_ID", e.getMessage());

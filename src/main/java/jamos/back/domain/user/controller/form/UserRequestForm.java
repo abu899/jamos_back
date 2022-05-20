@@ -8,6 +8,8 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserRequestForm {
 
     @NotBlank

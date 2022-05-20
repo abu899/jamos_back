@@ -6,6 +6,7 @@ import jamos.back.domain.login.service.LoginService;
 import jamos.back.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,23 +22,26 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/login")
-    public LoginResponseForm login(@RequestBody @Validated LoginRequestForm requestForm
+    public ResponseEntity<LoginResponseForm> login(@RequestBody @Validated LoginRequestForm requestForm
             , BindingResult bindingResult
             , HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
-            return new LoginResponseForm(false);
+            log.error("login bindingResult error");
+            return ResponseEntity.badRequest().body(new LoginResponseForm(false));
         }
 
         User loginUser = loginService.login(requestForm.getLoginId(), requestForm.getPassword());
         if (null == loginUser) {
-            return new LoginResponseForm(false);
+            log.error("loginUser null");
+            return ResponseEntity.badRequest().body(new LoginResponseForm(false));
         }
 
         HttpSession session = request.getSession();
+        session.setAttribute("LOGIN_USER", loginUser.getLoginId());
         log.info("session.getId() : {} ", session.getId());
 
-        return new LoginResponseForm(true);
+        return ResponseEntity.ok(new LoginResponseForm(true));
     }
 
     @PostMapping("/logout")
@@ -46,8 +50,10 @@ public class LoginController {
         if ( null != session ){
             log.info("session.getId() : {} ", session.getId());
             session.invalidate();
+
+            return "logout";
         }
 
-        return "logout";
+        return "invalid logout";
     }
 }
