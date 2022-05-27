@@ -15,7 +15,11 @@ public class UserRequestForm {
     @NotBlank
     @Email
     @Length(max = 50)
-    private String loginId;
+    private String email;
+
+    @NotBlank
+    @Length(max = 30)
+    private String name;
 
     @NotBlank
     @Length(max = 15)

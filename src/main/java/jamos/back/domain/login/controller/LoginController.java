@@ -38,7 +38,7 @@ public class LoginController {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("LOGIN_USER", loginUser.getLoginId());
+        session.setAttribute("LOGIN_USER", loginUser.getEmail());
         log.info("session.getId() : {} ", session.getId());
 
         return ResponseEntity.ok(new LoginResponseForm(true));

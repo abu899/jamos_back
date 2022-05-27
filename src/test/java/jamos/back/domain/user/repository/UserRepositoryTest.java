@@ -17,7 +17,7 @@ class UserRepositoryTest {
 
     @Test
     void saveUser() {
-        User user = new User("brett", "123");
+        User user = new User("brett@abc.com","brett", "123");
         User saveUser = userRepository.save(user);
 
         assertThat(user.getId()).isEqualTo(saveUser.getId());
@@ -25,13 +25,13 @@ class UserRepositoryTest {
 
     @Test
     void findUser() {
-        User user = new User("brett", "123");
+        User user = new User("brett@abc.com", "brett", "123");
         userRepository.save(user);
 
         User findUser = userRepository.findById(user.getId()).orElse(null);
         assertThat(user).isNotNull();
         assertThat(user.getId()).isEqualTo(findUser.getId());
-        assertThat(user.getLoginId()).isEqualTo(findUser.getLoginId());
+        assertThat(user.getEmail()).isEqualTo(findUser.getEmail());
     }
 
 }

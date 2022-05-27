@@ -46,7 +46,7 @@ class UserControllerTest {
 
         String body = mapper.writeValueAsString(
                 UserRequestForm.builder()
-                        .loginId("brettahn@abc.com")
+                        .email("brettahn@abc.com")
                         .password("123")
                         .build()
         );

@@ -25,14 +25,14 @@ public class UserController {
             return new UserResponseForm();
         }
 
-        User user = new User(userRequestForm.getLoginId(), userRequestForm.getPassword());
+        User user = new User(userRequestForm.getEmail(), userRequestForm.getName(), userRequestForm.getPassword());
         Long joinId = userService.join(user);
-        return new UserResponseForm(joinId, user.getLoginId());
+        return new UserResponseForm(joinId, user.getEmail());
     }
 
     @GetMapping("/{id}")
     public UserResponseForm findUser(@PathVariable("id") Long id) {
         User user = userService.findUserById(id);
-        return new UserResponseForm(user.getId(), user.getLoginId());
+        return new UserResponseForm(user.getId(), user.getEmail());
     }
 }
