@@ -20,15 +20,13 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @Column(unique = true)
     private String email;
 
     @Column(name = "user_name")
     private String name;
 
     private String password;
-
-    @OneToMany(mappedBy = "user")
-    private List<UserAccess> userAccess;
 
     public User(String email, String name, String password) {
         this.email = email;

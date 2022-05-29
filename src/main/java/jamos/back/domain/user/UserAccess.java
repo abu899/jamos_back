@@ -25,27 +25,20 @@ public class UserAccess {
     @JoinColumn(name = "instance_id")
     private Instance instance;
 
-    private boolean readable;
+    @Enumerated(EnumType.STRING)
+    Rights rights;
 
-    private boolean writeable;
-
-    private boolean ownership;
-
-    public UserAccess(User user, Instance instance, boolean readable, boolean writeable, boolean ownership) {
+    public UserAccess(User user, Instance instance, Rights rights) {
         this.user = user;
         this.instance = instance;
-        this.readable = readable;
-        this.writeable = writeable;
-        this.ownership = ownership;
+        this.rights = rights;
     }
 
     //생성 메서드
     public static UserAccess createUserAccess(User user,
                                               Instance instance,
-                                              boolean readable,
-                                              boolean writeable,
-                                              boolean ownership) {
+                                              Rights rights) {
 
-        return new UserAccess(user, instance, readable, writeable, ownership);
+        return new UserAccess(user, instance, rights);
     }
 }
