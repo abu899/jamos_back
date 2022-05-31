@@ -2,13 +2,13 @@ package jamos.back.domain.instance.dto;
 
 import lombok.Getter;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
 public class InstanceRequestDto {
 
     private String instanceName;
     private String instanceType;
-    private List<String> readableUsers;
-    private List<String> writableUsers;
+    private LocalDateTime creation_time;
+    private LocalDateTime modified_time;
 }

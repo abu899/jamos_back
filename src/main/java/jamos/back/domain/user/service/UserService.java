@@ -18,7 +18,7 @@ public class UserService {
 
     @Transactional
     public Long join(User user) {
-        if(userRepository.existsByLoginId(user.getEmail())) {
+        if(userRepository.existsByEmail(user.getEmail())) {
             throw new SameLoginIdException("Same login id");
         }
         userRepository.save(user);

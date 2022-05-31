@@ -2,9 +2,6 @@ package jamos.back.domain.user.controller.form;
 
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,5 +9,5 @@ import javax.validation.constraints.NotEmpty;
 public class UserResponseForm {
 
     private Long id;
-    private String loginId;
+    private String email;
 }

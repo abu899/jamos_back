@@ -1,17 +1,12 @@
 package jamos.back.domain.login.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jamos.back.domain.login.controller.form.LoginRequestForm;
-import jamos.back.domain.user.User;
-import jamos.back.domain.user.controller.form.UserRequestForm;
 import jamos.back.domain.user.repository.UserRepository;
-import jamos.back.domain.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
@@ -43,7 +38,7 @@ class LoginControllerTest {
 
         String body = mapper.writeValueAsString(
                 LoginRequestForm.builder()
-                        .loginId("brettahn@abc.co")
+                        .email("brettahn@abc.co")
                         .password("123")
                         .build()
         );

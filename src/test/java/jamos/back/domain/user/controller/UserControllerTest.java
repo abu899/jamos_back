@@ -41,18 +41,19 @@ class UserControllerTest {
                 .willReturn(
                         UserResponseForm.builder()
                                 .id(1L)
-                                .loginId("brettahn@abc.com")
+                                .email("brettahn@abc.com")
                                 .build().getId());
 
         String body = mapper.writeValueAsString(
                 UserRequestForm.builder()
                         .email("brettahn@abc.com")
+                        .name("brett")
                         .password("123")
                         .build()
         );
 
         ResultActions action = mvc.perform(
-                post("/users")
+                post("/account")
                         .content(body)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
@@ -61,7 +62,7 @@ class UserControllerTest {
 
         action
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("loginId").value("brettahn@abc.com"))
+                .andExpect(jsonPath("email").value("brettahn@abc.com"))
                 .andDo(MockMvcResultHandlers.print());
     }
 

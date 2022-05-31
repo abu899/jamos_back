@@ -18,7 +18,7 @@ public class LoginRequestForm {
     @NotBlank
     @Email
     @Length(max = 50)
-    private String loginId;
+    private String email;
 
     @NotBlank
     @Length(max = 15)

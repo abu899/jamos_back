@@ -31,7 +31,7 @@ public class LoginController {
             return ResponseEntity.badRequest().body(new LoginResponseForm(false));
         }
 
-        User loginUser = loginService.login(requestForm.getLoginId(), requestForm.getPassword());
+        User loginUser = loginService.login(requestForm.getEmail(), requestForm.getPassword());
         if (null == loginUser) {
             log.error("loginUser null");
             return ResponseEntity.badRequest().body(new LoginResponseForm(false));
