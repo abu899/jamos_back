@@ -1,10 +1,12 @@
 package jamos.back.domain.instance;
 
 import jamos.back.domain.jamdata.JamData;
+import jamos.back.domain.useraccess.UserAccess;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,6 +32,13 @@ public class Instance {
 
     LocalDateTime modifiedTime;
 
+    @OneToMany(mappedBy = "instance")
+    private Set<UserAccess> userAccesses;
+
+    public void changeJamData(JamData data) {
+        this.data = data;
+    }
+
     public static Instance createInstance(String name, String type) {
         Instance instance = new Instance();
         instance.setName(name);
@@ -38,7 +47,7 @@ public class Instance {
         LocalDateTime now = LocalDateTime.now();
         instance.setCreationTime(now);
         instance.setModifiedTime(now);
-        instance.setData(JamData.createJamData());
+        instance.changeJamData(JamData.createJamData());
 
         return instance;
     }

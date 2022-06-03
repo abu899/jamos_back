@@ -17,9 +17,6 @@ public class JamData {
     @Column(name = "data_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "data")
-    private Instance instance;
-
     private String fileList = "";
 
     private String dirList = "";

@@ -12,10 +12,9 @@ public class InstanceService {
 
     private final InstanceRepository instanceRepository;
 
-    public Long createInstance(InstanceRequestDto requestDto) {
+    public Instance createInstance(InstanceRequestDto requestDto) {
         Instance instance = Instance.createInstance(requestDto.getInstanceName(), requestDto.getInstanceName());
-        Instance savedInstance = instanceRepository.save(instance);
 
-        return savedInstance.getId();
+        return instanceRepository.save(instance);
     }
 }

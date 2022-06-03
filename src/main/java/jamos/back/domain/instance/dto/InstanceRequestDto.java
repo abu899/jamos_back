@@ -9,6 +9,4 @@ public class InstanceRequestDto {
 
     private String instanceName;
     private String instanceType;
-    private LocalDateTime creation_time;
-    private LocalDateTime modified_time;
 }

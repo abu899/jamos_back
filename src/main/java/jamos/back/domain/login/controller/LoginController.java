@@ -1,5 +1,6 @@
 package jamos.back.domain.login.controller;
 
+import jamos.back.domain.SessionConst;
 import jamos.back.domain.login.controller.form.LoginRequestForm;
 import jamos.back.domain.login.controller.form.LoginResponseForm;
 import jamos.back.domain.login.service.LoginService;
@@ -38,7 +39,7 @@ public class LoginController {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("LOGIN_USER", loginUser.getEmail());
+        session.setAttribute(SessionConst.LOGIN_USER_ID, loginUser.getId());
         log.info("session.getId() : {} ", session.getId());
 
         return ResponseEntity.ok(new LoginResponseForm(true));
