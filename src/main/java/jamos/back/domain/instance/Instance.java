@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,7 +25,7 @@ public class Instance {
     @Column(name = "instance_type")
     private String type;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "data_id")
     private JamData data;
 
@@ -33,7 +34,7 @@ public class Instance {
     LocalDateTime modifiedTime;
 
     @OneToMany(mappedBy = "instance")
-    private Set<UserAccess> userAccesses;
+    private Set<UserAccess> userAccesses = new HashSet<>();
 
     public void changeJamData(JamData data) {
         this.data = data;

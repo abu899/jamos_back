@@ -5,15 +5,18 @@ import jamos.back.domain.instance.dto.InstanceRequestDto;
 import jamos.back.domain.instance.repository.InstanceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class InstanceService {
 
     private final InstanceRepository instanceRepository;
 
+    @Transactional
     public Instance createInstance(InstanceRequestDto requestDto) {
-        Instance instance = Instance.createInstance(requestDto.getInstanceName(), requestDto.getInstanceName());
+        Instance instance = Instance.createInstance(requestDto.getInstance_name(), requestDto.getInstance_name());
 
         return instanceRepository.save(instance);
     }

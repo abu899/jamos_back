@@ -4,10 +4,13 @@ spring:
     username: b7a423b6714389
     password: 5f17c30b
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      max-lifetime: 300
+      idle-timeout: 300
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format-sql: true

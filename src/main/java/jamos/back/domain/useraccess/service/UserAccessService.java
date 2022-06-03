@@ -26,6 +26,7 @@ public class UserAccessService {
 
         log.info("userAccess Created");
 
-        return UserAccess.createUserAccess(user, instance, Rights.OWNER);
+        UserAccess userAccess = UserAccess.createUserAccess(user, instance, Rights.OWNER);
+        return userAccessRepository.save(userAccess);
     }
 }
