@@ -16,3 +16,4 @@ server:
   servlet:
     session:
       tracking-modes: COOKIE
+  port: ${port:8080}
