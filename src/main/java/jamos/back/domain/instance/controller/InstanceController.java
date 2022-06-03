@@ -12,11 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,6 +45,26 @@ public class InstanceController {
 
         if (null == userAccess) {
             return ResponseEntity.badRequest().body(new InstanceResponseDto(false));
+        }
+
+        return ResponseEntity.ok(new InstanceResponseDto(true));
+    }
+
+    @GetMapping("/instance")
+    public ResponseEntity<InstanceResponseDto> getInstances(HttpServletRequest request,
+                                                            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new InstanceResponseDto(false));
+        }
+
+        Long user_id = (Long)request.getSession().getAttribute(SessionConst.LOGIN_USER_ID);
+        log.info("user_id = {}", user_id);
+
+        List<Instance> instances = instanceService.getInstances(user_id);
+        for (Instance instance : instances) {
+            log.info("instance.getName() = {}, instance.getCreationTime() = {}",
+                    instance.getName(), instance.getCreationTime());
         }
 
         return ResponseEntity.ok(new InstanceResponseDto(true));

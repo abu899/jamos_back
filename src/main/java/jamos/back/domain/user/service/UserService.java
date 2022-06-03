@@ -1,5 +1,6 @@
 package jamos.back.domain.user.service;
 
+import jamos.back.domain.instance.Instance;
 import jamos.back.domain.user.User;
 import jamos.back.domain.user.repository.UserRepository;
 import jamos.back.global.exception.SameLoginIdException;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,7 +20,7 @@ public class UserService {
 
     @Transactional
     public Long join(User user) {
-        if(userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             throw new SameLoginIdException("Same login id");
         }
         userRepository.save(user);
