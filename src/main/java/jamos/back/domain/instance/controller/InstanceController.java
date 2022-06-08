@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -38,6 +39,8 @@ public class InstanceController {
 
         Instance instance = instanceService.createInstance(requestDto);
 
+        HttpSession session = request.getSession(false);
+        log.info("response session id = {} ", session.getId());
         Long user_id = (Long)request.getSession().getAttribute(SessionConst.LOGIN_USER_ID);
         log.info("user_id = {}", user_id);
 

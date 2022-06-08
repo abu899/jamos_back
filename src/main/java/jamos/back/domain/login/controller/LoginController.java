@@ -38,8 +38,9 @@ public class LoginController {
             return ResponseEntity.badRequest().body(new LoginResponseForm(false));
         }
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(true);
         session.setAttribute(SessionConst.LOGIN_USER_ID, loginUser.getId());
+        Long attribute = (Long)session.getAttribute(SessionConst.LOGIN_USER_ID);
         log.info("session.getId() : {} ", session.getId());
 
         return ResponseEntity.ok(new LoginResponseForm(true));
