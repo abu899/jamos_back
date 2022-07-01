@@ -10,6 +10,8 @@ import jamos.back.domain.useraccess.service.UserAccessService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +46,10 @@ public class InstanceController {
         Long user_id = (Long)request.getSession().getAttribute(SessionConst.LOGIN_USER_ID);
         log.info("user_id = {}", user_id);
 
-        UserAccess userAccess = userAccessService.create(user_id, instance);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+
+        UserAccess userAccess = userAccessService.create(userEmail, instance);
 
         if (null == userAccess) {
             return ResponseEntity.badRequest().body(new InstanceResponseDto(false));

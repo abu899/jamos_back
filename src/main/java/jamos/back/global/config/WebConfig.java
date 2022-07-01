@@ -9,15 +9,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "https://drawing-paper.netlify.app", "http://localhost:8080")
-                .allowCredentials(true)
-                .allowedHeaders("*")
-                .exposedHeaders("Set-Cookie")
-                .allowedMethods("*");
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedOrigins("http://localhost:3000",
+//                        "https://drawing-paper.netlify.app",
+//                        "http://localhost:8080",
+//                        "https://jamos-react.netlify.app")
+//                .allowCredentials(true)
+//                .allowedHeaders("Content-Type")
+//                .allowedMethods("GET", "OPTIONS", "HEAD", "PUT", "POST");
+//    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

@@ -46,7 +46,8 @@ public class LoginController {
             return ResponseEntity.badRequest().body(new LoginResponseForm(false));
         }
 
-        return ResponseEntity.ok(jwtProcess(request, requestForm));
+//        return ResponseEntity.ok(jwtProcess(request, requestForm));
+        return ResponseEntity.ok(sessionProcess(request, loginUser));
     }
 
     @PostMapping("/logout")
@@ -62,11 +63,13 @@ public class LoginController {
         return "invalid logout";
     }
 
-    private void sessionProcess(HttpServletRequest request, User loginUser) {
+    private LoginResponseForm sessionProcess(HttpServletRequest request, User loginUser) {
         HttpSession session = request.getSession(true);
         session.setAttribute(SessionConst.LOGIN_USER_ID, loginUser.getId());
         Long attribute = (Long)session.getAttribute(SessionConst.LOGIN_USER_ID);
         log.info("session.getId() : {} ", session.getId());
+
+        return new LoginResponseForm(true);
     }
 
     private LoginResponseForm jwtProcess(HttpServletRequest request, LoginRequestForm requestForm) {

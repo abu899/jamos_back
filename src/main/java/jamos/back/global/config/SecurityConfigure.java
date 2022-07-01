@@ -13,6 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Slf4j
 @EnableWebSecurity
@@ -30,6 +35,8 @@ public class SecurityConfigure {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info("Security Filter chain");
         http
+                .cors()
+                .and()
                 .csrf().disable()
 
                 .exceptionHandling()
@@ -42,13 +49,15 @@ public class SecurityConfigure {
 
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/account").permitAll()
+                .antMatchers("/instance").permitAll()
                 .anyRequest().authenticated()
         ;
 
@@ -64,5 +73,21 @@ public class SecurityConfigure {
                     .antMatchers("/h2-console/**"
                             , "/favicon.ico");
         };
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration conf = new CorsConfiguration();
+        conf.setAllowedOrigins(List.of("http://localhost:3000",
+                "https://drawing-paper.netlify.app",
+                "http://localhost:8080",
+                "https://jamos-react.netlify.app"));
+        conf.setAllowedMethods(List.of("GET", "OPTIONS", "HEAD", "PUT", "POST"));
+        conf.addAllowedHeader("Content-Type");
+        conf.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", conf);
+        return source;
     }
 }
