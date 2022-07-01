@@ -8,4 +8,10 @@ import lombok.Data;
 public class LoginResponseForm {
 
     private boolean success;
+    private String token;
+
+    public LoginResponseForm(boolean success) {
+        this.success = success;
+        this.token = "";
+    }
 }

@@ -1,4 +1,4 @@
-package jamos.back;
+package jamos.back.global.config;
 
 import jamos.back.global.exception.interceptor.CookieInterceptor;
 import org.springframework.context.annotation.Configuration;

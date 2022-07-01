@@ -1,6 +1,7 @@
 package jamos.back.domain.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jamos.back.domain.user.User;
 import jamos.back.domain.user.controller.form.UserRequestForm;
 import jamos.back.domain.user.controller.form.UserResponseForm;
 import jamos.back.domain.user.service.UserService;
@@ -37,7 +38,7 @@ class UserControllerTest {
 
     @Test
     void saveUser() throws Exception {
-        given(userService.join(any()))
+        given(userService.join((User)any()))
                 .willReturn(
                         UserResponseForm.builder()
                                 .id(1L)

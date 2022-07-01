@@ -25,9 +25,8 @@ public class UserController {
             return new UserResponseForm();
         }
 
-        User user = new User(userRequestForm.getEmail(), userRequestForm.getName(), userRequestForm.getPassword());
-        Long joinId = userService.join(user);
-        return new UserResponseForm(joinId, user.getEmail());
+        Long joinId = userService.join(userRequestForm);
+        return new UserResponseForm(joinId, userRequestForm.getEmail());
     }
 
     @GetMapping("/{id}")

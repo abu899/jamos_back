@@ -21,11 +21,11 @@ public class CookieInterceptor implements HandlerInterceptor {
         boolean isFirstHeader = true;
         for (String header : headers) {
             if (isFirstHeader) {
-                response.setHeader(HttpHeaders.SET_COOKIE, String.format("%s;Secure;%s",header, "SameSite="+sameSite));
+                response.setHeader(HttpHeaders.SET_COOKIE, String.format("%s;Secure;%s", header, "SameSite=" + sameSite));
                 isFirstHeader = false;
                 continue;
             }
-            response.addHeader(HttpHeaders.SET_COOKIE, String.format("%s;Secure;%s",header, "SameSite="+sameSite));
+            response.addHeader(HttpHeaders.SET_COOKIE, String.format("%s;Secure;%s", header, "SameSite=" + sameSite));
         }
     }
 }
