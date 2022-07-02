@@ -9,6 +9,7 @@ import jamos.back.domain.user.User;
 import jwt.tutorial.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,6 +30,8 @@ public class LoginController {
 
     private final LoginService loginService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    @Value("${spring.profiles.active:}")
+    private String activeProfile;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseForm> login(@RequestBody @Validated LoginRequestForm requestForm
@@ -46,8 +49,10 @@ public class LoginController {
             return ResponseEntity.badRequest().body(new LoginResponseForm(false));
         }
 
-//        return ResponseEntity.ok(jwtProcess(request, requestForm));
-        return ResponseEntity.ok(sessionProcess(request, loginUser));
+        if(activeProfile.equals("session")){
+            return ResponseEntity.ok(sessionProcess(request, loginUser));
+        }
+        return ResponseEntity.ok(jwtProcess(request, requestForm));
     }
 
     @PostMapping("/logout")

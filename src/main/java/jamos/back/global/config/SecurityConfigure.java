@@ -5,6 +5,7 @@ import jamos.back.global.config.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -32,8 +33,42 @@ public class SecurityConfigure {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        log.info("Security Filter chain");
+    @Profile({"default", "jwt"})
+    public SecurityFilterChain filterChainJwtToken(HttpSecurity http) throws Exception {
+        log.info("Security Filter chain with JWT token");
+        http
+                .cors()
+                .and()
+                .csrf().disable()
+
+                .exceptionHandling()
+                .authenticationEntryPoint(entryPointHandler)
+
+                .and()
+                .headers()
+                .frameOptions()
+                .sameOrigin()
+
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests()
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/account").permitAll()
+                .antMatchers("/instance").permitAll()
+                .anyRequest().authenticated()
+        ;
+
+        return http.build();
+    }
+
+    @Bean
+    @Profile("session")
+    public SecurityFilterChain filterChainSession(HttpSecurity http) throws Exception {
+        log.info("Security Filter chain with Session");
         http
                 .cors()
                 .and()
@@ -52,8 +87,6 @@ public class SecurityConfigure {
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 
                 .and()
-//                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/account").permitAll()

@@ -15,6 +15,9 @@ spring:
       hibernate:
         format-sql: true
 
+  profiles:
+    active: session
+
 ###################### test
 
 #  datasource:
@@ -31,10 +34,11 @@ spring:
 #        hibernate:
 #          format_sql: true
 #          show_sql: true
-#
+
 #logging:
 #  level:
 #    jamos.back: DEBUG
+#    web: DEBUG
 
 ############################
 server:

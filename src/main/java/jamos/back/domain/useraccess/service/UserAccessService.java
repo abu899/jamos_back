@@ -18,6 +18,18 @@ public class UserAccessService {
     private final UserAccessRepository userAccessRepository;
     private final UserRepository userRepository;
 
+    public UserAccess create(Long userId, Instance instance) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            throw new IllegalArgumentException("User not exists");
+        }
+
+        log.info("userAccess Created");
+
+        UserAccess userAccess = UserAccess.createUserAccess(user, instance, Rights.OWNER);
+        return userAccessRepository.save(userAccess);
+    }
+
     public UserAccess create(String userEmail, Instance instance) {
         User user = userRepository.findByEmail(userEmail).orElse(null);
         if (user == null) {

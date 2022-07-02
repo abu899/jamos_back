@@ -9,6 +9,7 @@ import jamos.back.domain.useraccess.UserAccess;
 import jamos.back.domain.useraccess.service.UserAccessService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +31,8 @@ public class InstanceController {
 
     private final InstanceService instanceService;
     private final UserAccessService userAccessService;
+    @Value("${spring.profiles.active:}")
+    private String activeProfile;
 
     @PostMapping("/instance")
     public ResponseEntity<InstanceResponseDto> makeInstance(@RequestBody @Validated InstanceRequestDto requestDto,
@@ -41,15 +44,20 @@ public class InstanceController {
 
         Instance instance = instanceService.createInstance(requestDto);
 
-        HttpSession session = request.getSession(false);
-        log.info("response session id = {} ", session.getId());
-        Long user_id = (Long)request.getSession().getAttribute(SessionConst.LOGIN_USER_ID);
-        log.info("user_id = {}", user_id);
+        UserAccess userAccess = null;
+        if(activeProfile.equals("session")) {
+            HttpSession session = request.getSession(false);
+            log.info("response session id = {} ", session.getId());
+            Long user_id = (Long) request.getSession().getAttribute(SessionConst.LOGIN_USER_ID);
+            log.info("user_id = {}", user_id);
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userEmail = authentication.getName();
+            userAccess = userAccessService.create(user_id, instance);
+        } else {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String userEmail = authentication.getName();
 
-        UserAccess userAccess = userAccessService.create(userEmail, instance);
+            userAccess = userAccessService.create(userEmail, instance);
+        }
 
         if (null == userAccess) {
             return ResponseEntity.badRequest().body(new InstanceResponseDto(false));
